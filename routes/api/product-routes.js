@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
   console.log(`GET ALL PRODUCTS ROUTE SLAPPED`)
   try {
     const productData = await Product.findAll({
-      include: [{ model: Tag }, { model: Category }]
+      include: [{ model: Category }, { model: Tag }]
     });
     res.status(200).json(productData);
   } catch (err) {
@@ -84,6 +84,7 @@ router.put('/:id', async (req, res) => {
     .then((productTags) => {
       // get list of current tag_ids
       const productTagIds = productTags.map(({ tag_id }) => tag_id);
+      console.log(productTagIds);
       // create filtered list of new tag_ids
       const newProductTags = req.body.tagIds
         .filter((tag_id) => !productTagIds.includes(tag_id))
